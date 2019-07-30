@@ -11,8 +11,10 @@ Note: If you use the free WakaTime service on your own machine, you can track ex
 See https://trello.com/c/6H24THnj/21-wakatime-time-tracking-for-ides-join-our-leaderboard
 
 1. How long did the entire assignment 1 project take you?
-> 3 days
+> 3 days ( +- 6h / day )
 
 2. What do you plan to do  differently in your development process for assignment 2?
-> Do the logic thinking first on how to implement ideas of the programming before coding it.
+> Do the logic thinking first on how to implement every ideas of the programming before coding it.
+> Learn to code simple as it will help debugging as well.
+> 
 
