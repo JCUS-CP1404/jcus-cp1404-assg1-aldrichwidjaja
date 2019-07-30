@@ -8,11 +8,13 @@ GitHub URL: https://github.com/JCUS-CP1404/jcus-cp1404-assg1-aldrichwidjaja/blob
 def main():
     print("Travel Tracker 1.0 - by <Aldrich Widjaja>")
     print("Welcome to my self-coded travel tracker")
+    readfile()
     menuinput = input("""Menu:
 L - List Places
 A - Add new place
 M - Mark a place as visited
-Q - Quit""").upper()
+Q - Quit
+>>>""").upper()
     while menuinput != "Q":
         if menuinput == "L":
             open1()
@@ -20,28 +22,45 @@ Q - Quit""").upper()
 L - List Places
 A - Add new place
 M - Mark a place as visited
-Q - Quit""").upper()
+Q - Quit
+>>>""").upper()
         elif menuinput == "A".upper():
             add()
             menuinput = input("""Menu:
 L - List Places
 A - Add new place
 M - Mark a place as visited
-Q - Quit""").upper()
+Q - Quit
+>>>""").upper()
         elif menuinput == "M".upper():
-            visit()
-            menuinput = input("""Menu:
+            visitplace = readfile1()
+            if visitplace>0:
+                visit()
+                menuinput = input("""Menu:
 L - List Places
 A - Add new place
 M - Mark a place as visited
-Q - Quit""").upper()
+Q - Quit
+>>>""").upper()
+            else:
+                print("No Unvisited Place")
+                menuinput = input("""Menu:
+L - List Places
+A - Add new place
+M - Mark a place as visited
+Q - Quit
+>>>""").upper()
         else:
             print("Invalid Choice! Please choose menu")
             menuinput = input("""Menu:
 L - List Places
 A - Add new place
 M - Mark a place as visited
-Q - Quit""").upper()
+Q - Quit
+>>>""").upper()
+
+    savefile()
+    print("Have a nice day :) - Aldrich Widjaja")
 
 def open1(): #READ CSV FILES AND DISPLAY
     import csv
@@ -109,7 +128,6 @@ def visit(): #Function to mark visited places
         reader = csv.reader(csvFile)
         datasort = sorted(reader, key=lambda row: (row[3], (int(row[2]))))
 
-
     while True:
         try:
             x = int(input("Please choose place to visit"))
@@ -119,6 +137,7 @@ def visit(): #Function to mark visited places
             elif x <= 0:
                 print("Invalid! Number must be > 0")
                 continue
+
         except ValueError:
             print("Invalid! Enter a valid number")
             continue
@@ -141,6 +160,35 @@ def visit(): #Function to mark visited places
 
     csvFile.close()
     csvFile1.close()
+
+def readfile():
+    import csv
+    with open('places.csv', 'r') as csvfile2:
+        reader = csv.reader(csvfile2)
+        row_count = sum(1 for row in reader)
+        print(row_count,"Files loaded from places.csv")
+    csvfile2.close()
+
+def savefile():
+    import csv
+    with open('places.csv', 'r') as csvfile2:
+        reader = csv.reader(csvfile2)
+        row_count = sum(1 for row in reader)
+        print(row_count,"Files saved to places.csv")
+    csvfile2.close()
+
+def readfile1():
+    import csv
+    with open('places.csv', 'r') as csvfile2:
+        reader = csv.reader(csvfile2)
+        visit = 0
+        for row in reader:
+            if row[3] == 'n':
+                visit = visit + 1
+            else:
+                visit = visit
+    csvfile2.close()
+    return visit
 
 main()
 
