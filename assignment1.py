@@ -12,38 +12,52 @@ def main():
 L - List Places
 A - Add new place
 M - Mark a place as visited
-Q - Quit""")
-    while menuinput != "Q".upper():
-        if menuinput == "L".upper():
+Q - Quit""").upper()
+    while menuinput != "Q":
+        if menuinput == "L":
             open1()
             menuinput = input("""Menu:
 L - List Places
 A - Add new place
 M - Mark a place as visited
-Q - Quit""")
+Q - Quit""").upper()
         elif menuinput == "A".upper():
             add()
             menuinput = input("""Menu:
 L - List Places
 A - Add new place
 M - Mark a place as visited
-Q - Quit""")
+Q - Quit""").upper()
+        elif menuinput == "M".upper():
+            visit()
+            menuinput = input("""Menu:
+ L - List Places
+A - Add new place
+M - Mark a place as visited
+Q - Quit""").upper()
 
-def open1():
+def open1(): #READ CSV FILES AND DISPLAY
     import csv
+    import operator
     with open('places.csv', 'r') as csvFile:
         reader = csv.reader(csvFile)
-        for row in reader:
-            print(row)
+        datasort = sorted(reader, key=lambda row:(row[3]))
+        count = 0
+        for row in datasort:
+            count= count + 1
+            notvis = row[3].replace('n', '*').replace('v', ' ')
+            print(notvis, '{:>1}'.format(count),'{:>0}'.format('.'), '{:<20}'.format(row[0]), '{:<20}'.format(row[1]), "Priority",'{:<20}'.format(row[2]))
+
     csvFile.close()
 
-def add():
+def add(): #WRITE CSV FILES IN NEW LINE
     import csv
-    x = str(input("Please Input name"))
-    y = str(input("Please Input name"))
-    z = int(input("Please Input name"))
+    x = str(input("Please Input city name"))
+    y = str(input("Please Input country name"))
+    z = int(input("Please Input priority"))
+    vn = "n"
     print(x, "In", y, "Priority", z, "Has been added to travel tracker")
-    newrow = [x, y, z]
+    newrow = [x, y, z, vn]
 
     with open('places.csv', 'a', newline='') as csvFile:
         writer = csv.writer(csvFile)
@@ -51,8 +65,28 @@ def add():
     csvFile.close()
 
 def visit():
-    text = open('places.csv', 'r')
-    visit =
+    import csv
+    x = int(input("Please choose place to visit"))
+
+    with open('places.csv', 'r') as csvFile:
+        reader = csv.reader(csvFile)
+        datasort = sorted(reader, key=lambda row: (row[3]))
+
+    with open('places.csv', 'w', newline='') as csvFile1:
+        writer = csv.writer(csvFile1)
+        num = 0
+        for row in datasort:
+            num = num+1
+            if num == x:
+                    row[3] = "v"
+                writer.writerow(row)
+
+    csvFile.close()
+    csvFile1.close()
+
+
+
+
 
 main()
 
