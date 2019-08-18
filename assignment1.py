@@ -1,68 +1,47 @@
 """
-Replace the contents of this module docstring with your own details
 Name: Aldrich Widjaja
 Date started: 25/07/2019
 GitHub URL: https://github.com/JCUS-CP1404/jcus-cp1404-assg1-aldrichwidjaja/blob/master/README.md
 """
-
-def main():
+def main(): #        MAIN FUNCTION - to call menu & function based on menu             #
     print("Travel Tracker 1.0 - by <Aldrich Widjaja>")
     print("Welcome to my self-coded travel tracker")
-    readfile()
+    countcsv = readfile()
+    print(countcsv, "Places loaded from places.csv")
+    callmenu = menu()
+    while callmenu != "Q":
+        if callmenu == "L":
+            open1()
+            callmenu = menu()
+        elif callmenu == "A".upper():
+            add()
+            callmenu = menu()
+        elif callmenu == "M".upper():
+            visitplace = readfile1()
+            if visitplace>0:
+                open1()
+                visit()
+                callmenu = menu()
+            else:
+                print("No Unvisited Place")
+                callmenu = menu()
+        else:
+            print("Invalid Choice! Please choose menu")
+            callmenu = menu()
+
+    print(countcsv, "Places saved in places.csv")
+    print("Have a nice day :) - Aldrich Widjaja")
+
+def menu():#        MENU FUNCTION - to display menu and input choice of menu          #
     menuinput = input("""Menu:
 L - List Places
 A - Add new place
 M - Mark a place as visited
 Q - Quit
 >>>""").upper()
-    while menuinput != "Q":
-        if menuinput == "L":
-            open1()
-            menuinput = input("""Menu:
-L - List Places
-A - Add new place
-M - Mark a place as visited
-Q - Quit
->>>""").upper()
-        elif menuinput == "A".upper():
-            add()
-            menuinput = input("""Menu:
-L - List Places
-A - Add new place
-M - Mark a place as visited
-Q - Quit
->>>""").upper()
-        elif menuinput == "M".upper():
-            visitplace = readfile1()
-            if visitplace>0:
-                visit()
-                menuinput = input("""Menu:
-L - List Places
-A - Add new place
-M - Mark a place as visited
-Q - Quit
->>>""").upper()
-            else:
-                print("No Unvisited Place")
-                menuinput = input("""Menu:
-L - List Places
-A - Add new place
-M - Mark a place as visited
-Q - Quit
->>>""").upper()
-        else:
-            print("Invalid Choice! Please choose menu")
-            menuinput = input("""Menu:
-L - List Places
-A - Add new place
-M - Mark a place as visited
-Q - Quit
->>>""").upper()
+    return menuinput
 
-    savefile()
-    print("Have a nice day :) - Aldrich Widjaja")
-
-def open1(): #READ CSV FILES AND DISPLAY
+def open1(): #        read&display csv function- open csv file and display              #
     import csv
     import operator
     with open('places.csv', 'r') as csvFile:
@@ -75,7 +54,7 @@ def open1(): #READ CSV FILES AND DISPLAY
             if row[3] == 'n':
                 row_count1 = row_count1 + 1
             count= count + 1
-            notvis = row[3].replace('n', '*').replace('v', ' ')
+            notvis = row[3].replace('n', '*').replace('v', ' ') #notvis is * / none to show visit / unvisited place
             print(notvis, '{:>1}'.format(count),'{:>0}'.format('.'), '{:<10}'.format(row[0]), "in", '{:<20}'.format(row[1]), "Priority",'{:<10}'.format(row[2]))
         if row_count1 == 0:
             print(row_count, "Places, No places left to visit. Why not add a new place?")
@@ -84,7 +63,7 @@ def open1(): #READ CSV FILES AND DISPLAY
 
     csvFile.close()
 
-def add(): #WRITE CSV FILES IN NEW LINE
+def add():#        ADD FUNCTION - to append and add new line data in csv             #
     import csv
     while True:
         x = input("Name: ")
@@ -121,7 +100,7 @@ def add(): #WRITE CSV FILES IN NEW LINE
         writer.writerow(newrow)
     csvFile.close()
 
-def visit(): #Function to mark visited places
+def visit():#        visit FUNCTION -to mark unvisited place to visited                #
     import csv
 
     with open('places.csv', 'r') as csvFile:
@@ -137,7 +116,6 @@ def visit(): #Function to mark visited places
             elif x <= 0:
                 print("Invalid! Number must be > 0")
                 continue
-
         except ValueError:
             print("Invalid! Enter a valid number")
             continue
@@ -161,23 +139,15 @@ def visit(): #Function to mark visited places
     csvFile.close()
     csvFile1.close()
 
-def readfile():
+def readfile():#        COUNT LINES CSV FUNCTION - to sum lines in csv                    #
     import csv
     with open('places.csv', 'r') as csvfile2:
         reader = csv.reader(csvfile2)
         row_count = sum(1 for row in reader)
-        print(row_count,"Files loaded from places.csv")
+    return row_count
     csvfile2.close()
 
-def savefile():
-    import csv
-    with open('places.csv', 'r') as csvfile2:
-        reader = csv.reader(csvfile2)
-        row_count = sum(1 for row in reader)
-        print(row_count,"Files saved to places.csv")
-    csvfile2.close()
-
-def readfile1():
+def readfile1():#        mark no unvisited place left function                             #
     import csv
     with open('places.csv', 'r') as csvfile2:
         reader = csv.reader(csvfile2)
@@ -190,7 +160,4 @@ def readfile1():
     csvfile2.close()
     return visit
 
-main()
-
-
-
+main() #TO START ALL THE WORK
