@@ -6,8 +6,7 @@ GitHub URL: https://github.com/JCUS-CP1404/jcus-cp1404-assg1-aldrichwidjaja/blob
 def main(): #        MAIN FUNCTION - to call menu & function based on menu             #
     print("Travel Tracker 1.0 - by <Aldrich Widjaja>")
     print("Welcome to my self-coded travel tracker")
-    countcsv = readfile()
-    print(countcsv, "Places loaded from places.csv")
+    print(readfile(), "Places loaded from places.csv")
     callmenu = menu()
     while callmenu != "Q":
         if callmenu == "L":
@@ -29,8 +28,9 @@ def main(): #        MAIN FUNCTION - to call menu & function based on menu      
             print("Invalid Choice! Please choose menu")
             callmenu = menu()
 
-    print(countcsv, "Places saved in places.csv")
+    print(readfile(), "Places saved in places.csv")
     print("Have a nice day :) - Aldrich Widjaja")
+    sortcsvfile()
 
 def menu():#        MENU FUNCTION - to display menu and input choice of menu          #
     menuinput = input("""Menu:
@@ -159,5 +159,18 @@ def readfile1():#        mark no unvisited place left function                  
                 visit = visit
     csvfile2.close()
     return visit
+
+def sortcsvfile():
+    import csv
+    with open("places.csv", "r") as csvfile3:
+        data = csv.reader(csvfile3)
+        sortedlist = sorted(data, key=lambda row:(int(row[2])))
+    with open("places.csv", "w", newline='') as f:
+        fileWriter = csv.writer(f)
+        for row in sortedlist:
+            fileWriter.writerow(row)
+    csvfile3.close()
+    f.close()
+
 
 main() #TO START ALL THE WORK
