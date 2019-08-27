@@ -7,7 +7,7 @@ def main(): #        MAIN FUNCTION - to call menu & function based on menu      
     print("Travel Tracker 1.0 - by <Aldrich Widjaja>")
     print("Welcome to my self-coded travel tracker")
     print(readfile(), "Places loaded from places.csv")
-    callmenu = menu()
+    callmenu = menu() # VARIABLE FOR CALLING MENU #
     while callmenu != "Q":
         if callmenu == "L":
             open1()
@@ -43,7 +43,6 @@ Q - Quit
 
 def open1(): #        read&display csv function- open csv file and display              #
     import csv
-    import operator
     with open('places.csv', 'r') as csvFile:
         reader = csv.reader(csvFile)
         datasort = sorted(reader, key=lambda row:(row[3],(int(row[2]))))
@@ -66,12 +65,12 @@ def open1(): #        read&display csv function- open csv file and display      
 def add():#        ADD FUNCTION - to append and add new line data in csv             #
     import csv
     while True:
-        x = input("Name: ")
+        x = input("Name: ") #to input name of place
         if x.isalpha() or '':
             break
         print("Invalid! Input Can't be blank / input only in alphabets")
     while True:
-        y = input("Country: ")
+        y = input("Country: ") #to input name of country
         if y.isalpha() or '':
             break
         print("Invalid! Input Can't be blank / input only in alphabets")
@@ -80,7 +79,7 @@ def add():#        ADD FUNCTION - to append and add new line data in csv        
         pass
 
     while True:
-        z = input("Priority: ")
+        z = input("Priority: ") #to input priority
         try:
             number = int(z)
             if number <= 0:
@@ -91,9 +90,9 @@ def add():#        ADD FUNCTION - to append and add new line data in csv        
         except NotPositiveError:
             print("Number must be > 0")
 
-    vn = "n" #vn = mark non-visited
+    vn = "n" #vn = mark non-visited , n = mark visisted
     print(x, "In", y, "Priority", z, "Has been added to travel tracker")
-    newrow = [x, y, z, vn]
+    newrow = [x, y, z, vn] #to make input to a list
 
     with open('places.csv', 'a', newline='') as csvFile:
         writer = csv.writer(csvFile)
@@ -102,12 +101,11 @@ def add():#        ADD FUNCTION - to append and add new line data in csv        
 
 def visit():#        visit FUNCTION -to mark unvisited place to visited                #
     import csv
-
     with open('places.csv', 'r') as csvFile:
         reader = csv.reader(csvFile)
         datasort = sorted(reader, key=lambda row: (row[3], (int(row[2]))))
 
-    while True:
+    while True: #ERROR CHECKING
         try:
             x = int(input("Please choose place to visit"))
             if x > sum(1 for row in datasort):
@@ -160,17 +158,16 @@ def readfile1():#        mark no unvisited place left function                  
     csvfile2.close()
     return visit
 
-def sortcsvfile():
+def sortcsvfile():#        Function to sort csv file and write it to final places.csv          #
     import csv
     with open("places.csv", "r") as csvfile3:
         data = csv.reader(csvfile3)
-        sortedlist = sorted(data, key=lambda row:(int(row[2])))
+        sortedlist = sorted(data, key=lambda row:(row[3], int(row[2])))
     with open("places.csv", "w", newline='') as f:
         fileWriter = csv.writer(f)
         for row in sortedlist:
             fileWriter.writerow(row)
     csvfile3.close()
     f.close()
-
 
 main() #TO START ALL THE WORK
