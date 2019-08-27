@@ -1,7 +1,7 @@
 """
 Name: Aldrich Widjaja
 Date started: 25/07/2019
-GitHub URL: https://github.com/JCUS-CP1404/jcus-cp1404-assg1-aldrichwidjaja/blob/master/README.md
+GitHub URL: https://github.com/JCUS-CP1404/jcus-cp1404-assg1-aldrichwidjaja
 """
 def main(): #        MAIN FUNCTION - to call menu & function based on menu             #
     print("Travel Tracker 1.0 - by <Aldrich Widjaja>")
